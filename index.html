@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced 1RM Calculator - Exponential Fatigue Model</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>1RM Calculator</h1>
+                <p class="subtitle">High-accuracy strength analysis using exponential fatigue model</p>
+            </div>
+            <button id="theme-toggle">Toggle Theme</button>
+        </header>
+
+        <main>
+            <div class="calculator-section">
+                <h2>Input Parameters</h2>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="weight">Weight Lifted (kg)</label>
+                        <input type="number" id="weight" min="1" step="0.5" placeholder="100">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="reps">Reps Performed</label>
+                        <input type="number" id="reps" min="1" max="20" placeholder="5">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="rir">Reps in Reserve (0-5)</label>
+                        <input type="number" id="rir" min="0" max="5" placeholder="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="lift-type">Lift Type</label>
+                        <select id="lift-type">
+                            <option value="bench_press">Bench Press</option>
+                            <option value="squat">Squat</option>
+                            <option value="deadlift">Deadlift</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="endurance">Endurance Profile</label>
+                        <select id="endurance">
+                            <option value="explosive_low">Explosive / Low Endurance</option>
+                            <option value="average" selected>Average</option>
+                            <option value="high">High Endurance</option>
+                            <option value="very_high">Very High Endurance</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="rep-speed">Last Rep Speed</label>
+                        <select id="rep-speed">
+                            <option value="very_slow">Very Slow / Grind</option>
+                            <option value="normal" selected>Normal</option>
+                            <option value="fast_explosive">Fast / Explosive</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" id="calculate-btn" class="calculate-button">Calculate 1RM</button>
+            </div>
+
+            <div class="calibration-section">
+                <h3>Calibration (Optional)</h3>
+                <p class="calibration-help">Enter two known sets to calibrate your personal fatigue constant</p>
+                
+                <div class="calibration-grid">
+                    <div class="calibration-set">
+                        <h4>First Set</h4>
+                        <div class="input-group">
+                            <label for="cal-w1">Weight (kg)</label>
+                            <input type="number" id="cal-w1" min="1" step="0.5" placeholder="80">
+                        </div>
+                        <div class="input-group">
+                            <label for="cal-r1">Reps</label>
+                            <input type="number" id="cal-r1" min="1" placeholder="8">
+                        </div>
+                    </div>
+                    
+                    <div class="calibration-set">
+                        <h4>Second Set</h4>
+                        <div class="input-group">
+                            <label for="cal-w2">Weight (kg)</label>
+                            <input type="number" id="cal-w2" min="1" step="0.5" placeholder="100">
+                        </div>
+                        <div class="input-group">
+                            <label for="cal-r2">Reps</label>
+                            <input type="number" id="cal-r2" min="1" placeholder="3">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" id="calibrate-btn" class="calibrate-button">Calibrate k Value</button>
+                <div id="calibration-result" class="calibration-result"></div>
+            </div>
+
+            <div class="results-section">
+                <h2>Results</h2>
+                <div id="results" class="results-content" aria-live="polite">
+                    <div class="result-placeholder">
+                        Enter your lift data above to calculate your estimated 1RM
+                    </div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3>Mathematical Model</h3>
+                <div class="formula">
+                    <p><strong>1RM = W × e<sup>(k × R<sub>eff</sub> / E)</sup> × CNS × V</strong></p>
+                    <p>Where:</p>
+                    <ul>
+                        <li><strong>W:</strong> Weight lifted</li>
+                        <li><strong>R<sub>eff</sub>:</strong> Reps + RIR (effective reps)</li>
+                        <li><strong>k:</strong> Fatigue constant (lift-specific or calibrated)</li>
+                        <li><strong>E:</strong> Endurance factor</li>
+                        <li><strong>CNS:</strong> Neural fatigue multiplier</li>
+                        <li><strong>V:</strong> Velocity multiplier</li>
+                    </ul>
+                </div>
+                <div class="explanation" aria-label="Model explanation">
+                    <h4>Why this calculator is more precise</h4>
+                    <p>
+                        Most 1RM estimators use linear percentage tables or simple regressions (e.g., Epley/Brzycki),
+                        which assume fatigue grows in a straight line with reps. Real fatigue is nonlinear. This model
+                        uses a true exponential term e<sup>(k·R<sub>eff</sub>/E)</sup> to capture how fatigue accelerates
+                        as you approach failure, producing tighter estimates across different rep ranges.
+                    </p>
+                    <ul>
+                        <li>Lift-specific k values tuned for bench, squat, and deadlift</li>
+                        <li>Optional personal calibration to fit your physiology</li>
+                        <li>Endurance profile (E) adjusts for rep tolerance differences</li>
+                        <li>CNS multiplier accounts for neural demands at high effort</li>
+                        <li>Velocity factor (V) reflects bar speed on the final rep</li>
+                        <li>Confidence intervals adapt based on rep range for transparency</li>
+                    </ul>
+                    <p>
+                        Together, these factors personalize the estimate and reduce bias from one-size-fits-all tables,
+                        especially outside low-rep ranges or when bar speed and RIR vary.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>
+                Built for serious strength analysis • Exponential fatigue model • High physiological accuracy
+                • <a class="footer-credit" href="https://github.com/hyuusd" target="_blank" rel="noopener noreferrer">Made by Hyu</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
