@@ -1,15 +1,15 @@
 :root {
-    --bg-primary: #000000;
-    --bg-secondary: #000000;
-    --bg-tertiary: #000000;
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255,255,255,0.7);
-    --accent-primary: #ffffff;
-    --accent-secondary: #ffffff;
-    --success: #ffffff;
-    --warning: #ffffff;
-    --error: #ffffff;
-    --border: rgba(255,255,255,0.2);
+    --bg-primary: #ffffff;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: rgba(0,0,0,0.7);
+    --accent-primary: #000000;
+    --accent-secondary: #000000;
+    --success: #000000;
+    --warning: #000000;
+    --error: #000000;
+    --border: rgba(0,0,0,0.2);
 }
 
 * {
@@ -55,22 +55,7 @@ header h1 {
     font-weight: 300;
 }
 
-/* Theme toggle */
-#theme-toggle {
-    background: transparent;
-    color: var(--text-primary);
-    border: 2px solid var(--text-primary);
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-#theme-toggle:hover {
-    opacity: 0.8;
-}
+/* Theme toggle removed */
 
 main {
     display: grid;
@@ -126,6 +111,7 @@ main {
     color: var(--text-primary);
     font-size: 1rem;
     transition: border-color 0.2s ease;
+    color-scheme: light;
 }
 
 .input-group input:focus,
@@ -388,20 +374,7 @@ footer .footer-credit:hover {
     text-decoration: underline;
 }
 
-/* Light theme overrides */
-body.light-theme {
-    --bg-primary: #ffffff;
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #ffffff;
-    --text-primary: #000000;
-    --text-secondary: rgba(0,0,0,0.7);
-    --accent-primary: #000000;
-    --accent-secondary: #000000;
-    --success: #000000;
-    --warning: #000000;
-    --error: #000000;
-    --border: rgba(0,0,0,0.2);
-}
+/* Single light theme only */
 
 @media (max-width: 768px) {
     .container {

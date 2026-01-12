@@ -247,7 +247,6 @@ const calW2Input = document.getElementById('cal-w2');
 const calR2Input = document.getElementById('cal-r2');
 const calibrateBtn = document.getElementById('calibrate-btn');
 const calibrationResult = document.getElementById('calibration-result');
-const themeToggle = document.getElementById('theme-toggle');
 
 // Results elements
 const resultsDiv = document.getElementById('results');
@@ -379,14 +378,6 @@ function handleCalibration() {
 function init() {
     calculateBtn.addEventListener('click', handleCalculation);
     calibrateBtn.addEventListener('click', handleCalibration);
-    themeToggle.addEventListener('click', () => {
-        const isLight = document.body.classList.toggle('light-theme');
-        try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch {}
-    });
-    try {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'light') { document.body.classList.add('light-theme'); }
-    } catch {}
 }
 
 // Initialize when DOM is loaded
